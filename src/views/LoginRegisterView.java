@@ -4,16 +4,19 @@
  */
 package views;
 
+import controller.LoginRegisterController;
+import java.util.function.ToDoubleFunction;
+
 /**
  *
  * @author Khatama
  */
-public class LoginRegister extends javax.swing.JFrame {
+public class LoginRegisterView extends javax.swing.JFrame {
 
     /**
      * Creates new form LoginRegister
      */
-    public LoginRegister() {
+    public LoginRegisterView() {
         initComponents();
     }
 
@@ -28,11 +31,11 @@ public class LoginRegister extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTxtUsername = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jTxtPassword = new javax.swing.JPasswordField();
+        btnLogin = new javax.swing.JButton();
+        btnRegister = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(241, 255, 243));
@@ -41,34 +44,34 @@ public class LoginRegister extends javax.swing.JFrame {
 
         jLabel2.setText("Username");
 
-        jTextField1.setToolTipText("halo");
+        jTxtUsername.setToolTipText("halo");
 
         jLabel3.setText("Password");
 
-        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
+        jTxtPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordField1ActionPerformed(evt);
+                jTxtPasswordActionPerformed(evt);
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(0, 208, 158));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(0, 0, 0));
-        jButton1.setText("Login");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnLogin.setBackground(new java.awt.Color(0, 208, 158));
+        btnLogin.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnLogin.setForeground(new java.awt.Color(0, 0, 0));
+        btnLogin.setText("Login");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnLoginActionPerformed(evt);
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(223, 247, 226));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(0, 0, 0));
-        jButton2.setText("Register");
-        jButton2.setBorderPainted(false);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnRegister.setBackground(new java.awt.Color(223, 247, 226));
+        btnRegister.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnRegister.setForeground(new java.awt.Color(0, 0, 0));
+        btnRegister.setText("Register");
+        btnRegister.setBorderPainted(false);
+        btnRegister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnRegisterActionPerformed(evt);
             }
         });
 
@@ -82,9 +85,9 @@ public class LoginRegister extends javax.swing.JFrame {
                         .addGap(81, 81, 81)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2)
-                            .addComponent(jTextField1)
+                            .addComponent(jTxtUsername)
                             .addComponent(jLabel3)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jTxtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(133, 133, 133)
                         .addComponent(jLabel1)))
@@ -92,8 +95,8 @@ public class LoginRegister extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE))
+                    .addComponent(btnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnRegister, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -104,32 +107,54 @@ public class LoginRegister extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTxtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTxtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(btnLogin)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(btnRegister)
                 .addContainerGap(56, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        LoginRegisterController controller = new LoginRegisterController();
+        
+        String username = jTxtUsername.getText();
+        String password = new String(jTxtPassword.getPassword());
+        boolean isLogin = controller.handleLogin(username, password);
+        if (isLogin) {
+            System.out.println("TODO Dashboard");
+            DashBoardView dashboard = new DashBoardView();
+            dashboard.setVisible(true);
+            dashboard.setLocationRelativeTo(null);
+            dispose();
+        }
+    }//GEN-LAST:event_btnLoginActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
+        LoginRegisterController controller = new LoginRegisterController();
+        
+        String username = jTxtUsername.getText();
+        String password = new String(jTxtPassword.getPassword());
+        boolean isLogin = controller.handleRegister(username, password);
+        if (isLogin) {
+            System.out.println("TODO Dashboard");
+            DashBoardView dashboard = new DashBoardView();
+            dashboard.setVisible(true);
+            dashboard.setLocationRelativeTo(null);
+            dispose();
+        }
+    }//GEN-LAST:event_btnRegisterActionPerformed
 
-    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
+    private void jTxtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtPasswordActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordField1ActionPerformed
+    }//GEN-LAST:event_jTxtPasswordActionPerformed
 
     /**
      * @param args the command line arguments
@@ -148,31 +173,32 @@ public class LoginRegister extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginRegisterView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginRegisterView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginRegisterView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginRegisterView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LoginRegister().setVisible(true);
+                new LoginRegisterView().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btnRegister;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPasswordField jTxtPassword;
+    private javax.swing.JTextField jTxtUsername;
     // End of variables declaration//GEN-END:variables
 }

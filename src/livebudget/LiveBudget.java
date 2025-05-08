@@ -4,7 +4,9 @@
  */
 package livebudget;
 
-import views.LoginRegister;
+import java.sql.Connection;
+import koneksi.Connector;
+import views.LoginRegisterView;
 
 /**
  *
@@ -17,8 +19,9 @@ public class LiveBudget {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        LoginRegister login = new LoginRegister();
-        login.setVisible(true);
+        LoginRegisterView v = new LoginRegisterView();
+        v.setVisible(true);
+        v.setLocationRelativeTo(null);
     }
     
 }
