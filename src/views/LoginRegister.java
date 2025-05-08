@@ -52,6 +52,7 @@ public class LoginRegister extends javax.swing.JFrame {
         });
 
         jButton1.setBackground(new java.awt.Color(0, 208, 158));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setForeground(new java.awt.Color(0, 0, 0));
         jButton1.setText("Login");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -61,6 +62,7 @@ public class LoginRegister extends javax.swing.JFrame {
         });
 
         jButton2.setBackground(new java.awt.Color(223, 247, 226));
+        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton2.setForeground(new java.awt.Color(0, 0, 0));
         jButton2.setText("Register");
         jButton2.setBorderPainted(false);
