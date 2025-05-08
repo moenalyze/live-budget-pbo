@@ -4,6 +4,8 @@
  */
 package livebudget;
 
+import views.LoginRegister;
+
 /**
  *
  * @author Khatama
@@ -15,6 +17,8 @@ public class LiveBudget {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        LoginRegister login = new LoginRegister();
+        login.setVisible(true);
     }
     
 }
