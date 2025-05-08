@@ -4,7 +4,7 @@
  */
 package views;
 
-import controller.LoginRegisterController;
+import controllers.LoginRegisterController;
 import java.util.function.ToDoubleFunction;
 
 /**

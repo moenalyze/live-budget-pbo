@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package controller;
+package controllers;
 
-import helper.UserDAO;
+import helpers.UserDAO;
 
 /**
  *
@@ -26,10 +26,11 @@ public class LoginRegisterController {
         }
         
         boolean isLogin = userDAO.login(username, password);
+        // Mengecek apakah 
         if (isLogin) {
-            System.out.println("YATTAAAA");
+            System.out.println("Berhasil Login");
         } else {
-            System.out.println("BEGO");
+            System.out.println("Username || Password salah");
         }
         return isLogin;
     }
@@ -43,9 +44,9 @@ public class LoginRegisterController {
         
         boolean isRegister = userDAO.register(username, password);
         if (isRegister) {
-            System.out.println("YATTAAAA");
+            System.out.println("Berhasil Register");
         } else {
-            System.out.println("Username sudah ada");
+            System.out.println("Jaga-jaga");
         }
         return isRegister;
     }
