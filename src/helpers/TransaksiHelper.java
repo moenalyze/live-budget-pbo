@@ -3,20 +3,21 @@ package helpers;
 import java.sql.*;
 import java.util.*;
 import models.Transaksi;
+import models.User;
 
-public class DBHelper {
+public class TransaksiHelper {
     private final String dbUrl = "jdbc:mysql://localhost/livebudget";
-    private final String user = "root";
-    private final String pass = "";
+    private final String username = "root";
+    private final String password = "";
     
     private Connection conn;
     private Statement stmt;
     private ResultSet rs;
     private String query;
     
-    public DBHelper() {
+    public TransaksiHelper() {
         try {
-            conn = DriverManager.getConnection(dbUrl, user, pass);
+            conn = DriverManager.getConnection(dbUrl, username, password);
         } catch (SQLException e){
             e.printStackTrace();
         }
@@ -25,9 +26,10 @@ public class DBHelper {
     // read data
     public List<Transaksi> getAllData() {
         List<Transaksi> data = new ArrayList<>();
-        query = "SELECT * FROM transaksi";
+        query = "SELECT * FROM transaksi where id_user = '" + User.getId() + "'";
         
         try {
+            System.out.println(User.getId());
             stmt = conn.createStatement();
             rs = stmt.executeQuery(query);
             
@@ -50,10 +52,12 @@ public class DBHelper {
     // write data
     public boolean addNewTransaksi(String type, int amount, String description) {
         boolean value = false;
-        int id_user = 1;
+        int id_user = User.getId();
         int id_aset = 1;
         
-        query = "INSERT INTO transaksi SET jenis = '" + type + "', jumlah = '" + amount + "', deskripsi = '" + description + "', id_user = '" + id_user + "', id_aset = '" + id_aset + "'";
+        System.out.println(id_user);
+        
+        query = "INSERT INTO transaksi SET jenis = '" + type + "', jumlah = '" + amount + "', deskripsi = '" + description + "', id_user = '" + User.getId() + "', id_aset = '" + id_aset + "'";
 //        query = "INSERT INTO transaksi (jenis, jumlah, tanggal, deskripsi) VALUES (" + type + "," + amount + ",", + "CURRENT_DATE," + description + "," + ")";
         
         try {

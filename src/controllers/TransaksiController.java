@@ -2,31 +2,33 @@ package controllers;
 
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import helpers.DBHelper;
+import helpers.TransaksiHelper;
 import models.Transaksi;
+import models.User;
 import views.*;
 
 public class TransaksiController {
-    DashBoard v;
+    Dashboard v;
     private final DefaultTableModel modelTransaksi;
     
-    public TransaksiController() {
+    public TransaksiController(Dashboard v) {
         String []header = {"Type", "Amount", "Date", "Description"};
         modelTransaksi = new DefaultTableModel(header, 0);
-        refreshTable();
-        
-        v = new DashBoard(this);
+//        this.userId = userId;
+//        this.username = username;
+
+        System.out.println(User.getId());
+//        v = new Dashboard(this, User.getUsername());
+        this.v = v;
         v.getjTableTransaksi().setModel(modelTransaksi);
+        refreshTable();
         v.setVisible(true);
+        v.setLocationRelativeTo(null);
+        
     }
     
     public void tambahTransaksi(String type, int amount, String description) {
-        DBHelper helper = new DBHelper();
-        
-//        // Ambil data dari form
-//        String jenis = jComboBoxType.getSelectedItem().toString();;         // misal: "Pemasukan" / "Pengeluaran"
-//        int jumlah = getJumlah();                  // pastikan parsing dari text field
-//        String deskripsi = getDeskripsi();         // dari textarea
+        TransaksiHelper helper = new TransaksiHelper();
         
         if(helper.addNewTransaksi(type, amount, description)) {
             refreshTable();
@@ -37,7 +39,7 @@ public class TransaksiController {
     
     private void refreshTable() {
         modelTransaksi.setRowCount(0);
-        DBHelper helper = new DBHelper();
+        TransaksiHelper helper = new TransaksiHelper();
         
         List<Transaksi> data = helper.getAllData();
         
