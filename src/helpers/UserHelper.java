@@ -23,9 +23,9 @@ public class UserHelper {
     }
 
     // cek login
-    public boolean login(String username, String password) {
+    public boolean login(String username, String hashedPassword) {
         boolean result = false;
-        query = "SELECT * FROM user WHERE username = '" + username + "' AND password = '" + password + "'";
+        query = "SELECT * FROM user WHERE username = '" + username + "' AND password = '" + hashedPassword + "'";
         
         try {
             stmt = conn.createStatement();
@@ -35,10 +35,8 @@ public class UserHelper {
                 User.setId(rs.getInt("id"));
                 User.setUsername(rs.getString("username"));
                 User.setPassword(rs.getString("password"));
-                
-                System.out.println(User.getUsername());
-                System.out.println(User.getPassword());
-                result = true;
+                String storedHashed = User.getPassword();
+                result = hashedPassword.equals(storedHashed);
             }
             
             rs.close();
@@ -97,28 +95,4 @@ public class UserHelper {
 
         return result;
     }
-    
-    // read data
-//    public List<User> getUserData() {
-//        List<User> userData = new ArrayList<>();
-//        query = "SELECT * FROM user where id_user = '" + this.userId + "'";
-//        
-//        try {
-//            stmt = conn.createStatement();
-//            rs = stmt.executeQuery(query);
-//            
-//            while(rs.next()) {
-//                User user = new User();
-//                user.setId(userId);
-//                user.setUsername(rs.getString("username"));
-//                user.setPassword(rs.getString("password"));
-//                userData.add(user); 
-//            }
-//            
-//            stmt.close();
-//        } catch (SQLException e) {
-//        }
-//        
-//        return userData; 
-//    }
 }

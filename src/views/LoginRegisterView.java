@@ -1,17 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package views;
 
 import controllers.LoginRegisterController;
 import controllers.TransaksiController;
 import models.User;
+import helpers.*;
 
-/**
- *
- * @author Khatama
- */
 public class LoginRegisterView extends javax.swing.JFrame {
 
     /**
@@ -30,25 +23,46 @@ public class LoginRegisterView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jButtonRegister = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTextFieldUsername = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jPasswordFieldPassword = new javax.swing.JPasswordField();
         jButtonLogin = new javax.swing.JButton();
-        jButtonRegister = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(241, 255, 243));
+        setBackground(new java.awt.Color(255, 102, 0));
 
+        jPanel1.setBackground(new java.awt.Color(241, 255, 243));
+        jPanel1.setForeground(new java.awt.Color(255, 102, 102));
+
+        jButtonRegister.setBackground(new java.awt.Color(223, 247, 226));
+        jButtonRegister.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButtonRegister.setForeground(new java.awt.Color(0, 0, 0));
+        jButtonRegister.setText("Register");
+        jButtonRegister.setBorderPainted(false);
+        jButtonRegister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRegisterActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("SansSerif", 1, 22)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Welcome to LiveBudget!");
 
         jLabel2.setText("Username");
 
+        jTextFieldUsername.setBackground(new java.awt.Color(223, 247, 226));
         jTextFieldUsername.setToolTipText("halo");
+        jTextFieldUsername.setBorder(null);
 
         jLabel3.setText("Password");
 
+        jPasswordFieldPassword.setBackground(new java.awt.Color(223, 247, 226));
+        jPasswordFieldPassword.setBorder(null);
         jPasswordFieldPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jPasswordFieldPasswordActionPerformed(evt);
@@ -65,45 +79,34 @@ public class LoginRegisterView extends javax.swing.JFrame {
             }
         });
 
-        jButtonRegister.setBackground(new java.awt.Color(223, 247, 226));
-        jButtonRegister.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButtonRegister.setForeground(new java.awt.Color(0, 0, 0));
-        jButtonRegister.setText("Register");
-        jButtonRegister.setBorderPainted(false);
-        jButtonRegister.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRegisterActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(81, 81, 81)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(58, 58, 58)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButtonLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2)
                             .addComponent(jTextFieldUsername)
                             .addComponent(jLabel3)
-                            .addComponent(jPasswordFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(133, 133, 133)
-                        .addComponent(jLabel1)))
-                .addContainerGap(97, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonRegister, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jPasswordFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(43, 43, 43)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
@@ -117,7 +120,18 @@ public class LoginRegisterView extends javax.swing.JFrame {
                 .addComponent(jButtonLogin)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonRegister)
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -127,18 +141,21 @@ public class LoginRegisterView extends javax.swing.JFrame {
         String username = jTextFieldUsername.getText();
         char[] passwordChars = jPasswordFieldPassword.getPassword();
         String password = new String(passwordChars);
-        
-        LoginRegisterController loginRegister = new LoginRegisterController(this);
-        loginRegister.login(username, password);
+
+        String hashedPassword = Hash.hashPassword(password);
+
+        LoginRegisterController controller = new LoginRegisterController(this);
+        controller.login(username, hashedPassword);
     }//GEN-LAST:event_jButtonLoginActionPerformed
 
     private void jButtonRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterActionPerformed
         String username = jTextFieldUsername.getText();
         char[] passwordChars = jPasswordFieldPassword.getPassword();
         String password = new String(passwordChars);
+        String hashedPassword = Hash.hashPassword(password);
 
         LoginRegisterController loginRegister = new LoginRegisterController(this);
-        loginRegister.register(username, password);
+        loginRegister.register(username, hashedPassword);
     }//GEN-LAST:event_jButtonRegisterActionPerformed
 
     private void jPasswordFieldPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordFieldPasswordActionPerformed
@@ -187,6 +204,7 @@ public class LoginRegisterView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField jPasswordFieldPassword;
     private javax.swing.JTextField jTextFieldUsername;
     // End of variables declaration//GEN-END:variables

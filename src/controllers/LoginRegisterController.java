@@ -17,18 +17,14 @@ public class LoginRegisterController {
         UserHelper helper = new UserHelper();
 
         if(helper.login(username, password)){
-//            new TransaksiController(); // ini akan buka Dashboard juga
-//            new AsetController(); // ini akan buka Dashboard juga
-//            v.dispose(); // nutup login window
-
             Dashboard dashboard = new Dashboard(); // buat sekali
 
-        // kirim dashboard ke kedua controller
-        TransaksiController transaksiController = new TransaksiController(dashboard);
-        AsetController asetController = new AsetController(dashboard);
+            // kirim dashboard ke kedua controller
+            TransaksiController transaksiController = new TransaksiController(dashboard);
+            AsetController asetController = new AsetController(dashboard);
 
-        dashboard.setVisible(true); // show dashboard
-        v.dispose(); // tutup login
+            dashboard.setVisible(true); // show dashboard
+            v.dispose(); // tutup login
         } else {
             // error handling
             JOptionPane.showMessageDialog(v, "Login gagal!");
@@ -40,8 +36,6 @@ public class LoginRegisterController {
         
         if(helper.register(username, password)){
             JOptionPane.showMessageDialog(v, "Registrasi berhasil!");
-//            TransaksiController transaksi = new TransaksiController(); // ini akan buka Dashboard juga
-//            v.dispose(); // nutup login window
         } else {
             // error handling
             JOptionPane.showMessageDialog(v, "Registrasi gagal! Username mungkin sudah digunakan.");
