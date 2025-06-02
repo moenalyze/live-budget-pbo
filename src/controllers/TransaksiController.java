@@ -60,10 +60,10 @@ public class TransaksiController {
         Aset aset = asetHelper.getAsetBySource(source);
 
         if (aset != null) {
-            int id_aset = asetHelper.getAsetId(source);
+//            int id_aset = asetHelper.getAsetId(source);
         
             if(helper.updateTransaksi(type, amount, description)) {
-                asetHelper.updateSaldo(id_aset, amount);
+//                asetHelper.updateSaldo(id_aset, amount);
                 Transaksi.total += amount;
                 AsetController asetController = new AsetController(v);
                 refreshTable();

@@ -146,61 +146,62 @@ public class TransaksiHelper {
         }
     }
     
-        public boolean updateTransaksi(String type, int amount, String description) {
-            boolean value = false;
-            
-            String oldType = "";
-            int oldAmount = 0;
-                    
-            try {
-                PreparedStatement oldStmt = conn.prepareStatement("SELECT jenis, jumlah FROM transaksi WHERE id = ? AND id_user = ?");
-                oldStmt.setInt(1, TransaksiView.selectedTransaksiId);
-                oldStmt.setInt(2, User.getId());
-                ResultSet oldRs = oldStmt.executeQuery();
-                if (oldRs.next()) {
-                    oldType = oldRs.getString("jenis");
-                    oldAmount = oldRs.getInt("jumlah");
-                }
-                oldRs.close();
-                oldStmt.close();
+    public boolean updateTransaksi(String type, int amount, String description) {
+        boolean value = false;
 
-                // 2. Update transaksi
-                PreparedStatement pstmt = conn.prepareStatement(updateTransaksi);
-                pstmt.setString(1, type);
-                pstmt.setInt(2, amount);
-                pstmt.setString(3, description);
-                pstmt.setInt(4, TransaksiView.selectedTransaksiId);
-                pstmt.setInt(5, User.getId());
-                int rows = pstmt.executeUpdate();
+        int oldAmount = 0;
 
-                // 3. Kalau berhasil, update saldo aset
-                if (rows > 0) {
-                    int selisih = 0;
-                    if (oldType.equals(type)) {
-                        selisih = (type.equals("Pemasukan") ? 1 : -1) * (amount - oldAmount);
-                    } else {
-                        // Contoh: dari Pemasukan ke Pengeluaran atau sebaliknya
-                        selisih = (type.equals("Pemasukan") ? 1 : -1) * amount + 
-                                  (oldType.equals("Pemasukan") ? -1 : 1) * oldAmount;
-                    }
+        try {
+            // Ambil data transaksi lama
+            PreparedStatement oldStmt = conn.prepareStatement(
+                "SELECT jumlah FROM transaksi WHERE id = ? AND id_user = ?"
+            );
+            oldStmt.setInt(1, TransaksiView.selectedTransaksiId);
+            oldStmt.setInt(2, User.getId());
+            ResultSet oldRs = oldStmt.executeQuery();
 
-                    // Update ke saldo aset (misal cuma 1 aset aktif / total)
-                    PreparedStatement asetStmt = conn.prepareStatement("UPDATE aset_keuangan SET saldo = saldo + ? WHERE id_user = ?");
-                    asetStmt.setInt(1, selisih);
-                    asetStmt.setInt(2, User.getId());
-                    asetStmt.executeUpdate();
-                    asetStmt.close();
-
-                    value = true;
-                    TransaksiView.selectedTransaksiId = 0;
-                }
-                
-                
-            } catch (SQLException e) {
-                e.printStackTrace();
+            if (oldRs.next()) {
+                oldAmount = oldRs.getInt("jumlah");
             }
 
-            return value;
-        }
+            oldRs.close();
+            oldStmt.close();
 
+            // Update transaksi
+            PreparedStatement pstmt = conn.prepareStatement(updateTransaksi);
+            pstmt.setString(1, type); // harus "Pengeluaran"
+            pstmt.setInt(2, amount);
+            pstmt.setString(3, description);
+            pstmt.setInt(4, TransaksiView.selectedTransaksiId);
+            pstmt.setInt(5, User.getId());
+            int rows = pstmt.executeUpdate();
+            pstmt.close();
+
+            if (rows > 0) {
+                int selisih = oldAmount - amount;
+                System.out.println("Old Amount " + oldAmount);
+                System.out.println("Amount " + amount);
+                System.out.println("Selisih " + selisih);
+
+                if (selisih != 0) {
+                    // Kalau hasil positif, saldo ditambah (karena pengeluaran dikurangi)
+                    // Kalau hasil negatif, saldo dikurangi (karena pengeluaran ditambah)
+                    PreparedStatement asetStmt = conn.prepareStatement(
+                        "UPDATE aset_keuangan SET saldo = saldo + ?, sumber = ? WHERE id_user = ?"
+                    );
+                    asetStmt.setInt(1, selisih);
+                    asetStmt.setInt(3, User.getId());
+                    asetStmt.executeUpdate();
+                    asetStmt.close();
+                }
+
+                value = true;
+                TransaksiView.selectedTransaksiId = 0;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return value;
+    }
 }
