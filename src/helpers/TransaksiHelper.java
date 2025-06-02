@@ -146,15 +146,18 @@ public class TransaksiHelper {
         }
     }
     
-    public boolean updateTransaksi(String type, int amount, String description) {
+    public boolean updateTransaksi(String type, int amount, String description, String newSource) {
         boolean value = false;
 
         int oldAmount = 0;
+        String oldSource = "";
 
         try {
             // Ambil data transaksi lama
             PreparedStatement oldStmt = conn.prepareStatement(
-                "SELECT jumlah FROM transaksi WHERE id = ? AND id_user = ?"
+                "SELECT transaksi.jumlah, aset_keuangan.sumber " +
+                "FROM transaksi JOIN aset_keuangan ON transaksi.id_aset = aset_keuangan.id " +
+                "WHERE transaksi.id = ? AND transaksi.id_user = ?"
             );
             oldStmt.setInt(1, TransaksiView.selectedTransaksiId);
             oldStmt.setInt(2, User.getId());
@@ -162,6 +165,7 @@ public class TransaksiHelper {
 
             if (oldRs.next()) {
                 oldAmount = oldRs.getInt("jumlah");
+                oldSource = oldRs.getString("sumber");
             }
 
             oldRs.close();
@@ -178,23 +182,72 @@ public class TransaksiHelper {
             pstmt.close();
 
             if (rows > 0) {
-                int selisih = oldAmount - amount;
-                System.out.println("Old Amount " + oldAmount);
-                System.out.println("Amount " + amount);
-                System.out.println("Selisih " + selisih);
-
-                if (selisih != 0) {
-                    // Kalau hasil positif, saldo ditambah (karena pengeluaran dikurangi)
-                    // Kalau hasil negatif, saldo dikurangi (karena pengeluaran ditambah)
-                    PreparedStatement asetStmt = conn.prepareStatement(
-                        "UPDATE aset_keuangan SET saldo = saldo + ?, sumber = ? WHERE id_user = ?"
+                if (!oldSource.equals(newSource)) {
+                    // Sumber berubah
+                    // Tambahkan kembali ke saldo sumber lama
+                    PreparedStatement kembalikanKeSumberLama = conn.prepareStatement(
+                        "UPDATE aset_keuangan SET saldo = saldo + ? " +
+                        "WHERE sumber = ? AND id_user = ?"
                     );
-                    asetStmt.setInt(1, selisih);
-                    asetStmt.setInt(3, User.getId());
-                    asetStmt.executeUpdate();
-                    asetStmt.close();
-                }
+                    kembalikanKeSumberLama.setInt(1, oldAmount);
+                    kembalikanKeSumberLama.setString(2, oldSource);
+                    kembalikanKeSumberLama.setInt(3, User.getId());
+                    kembalikanKeSumberLama.executeUpdate();
+                    kembalikanKeSumberLama.close();
 
+                    // Kurangi saldo dari sumber baru
+                    PreparedStatement kurangiDariSumberBaru = conn.prepareStatement(
+                        "UPDATE aset_keuangan SET saldo = saldo - ? " +
+                        "WHERE sumber = ? AND id_user = ?"
+                    );
+                    kurangiDariSumberBaru.setInt(1, amount);
+                    kurangiDariSumberBaru.setString(2, newSource);
+                    kurangiDariSumberBaru.setInt(3, User.getId());
+                    kurangiDariSumberBaru.executeUpdate();
+                    kurangiDariSumberBaru.close();
+                    
+                    // Ambil id_aset baru berdasarkan sumber baru
+                    int newAsetId = -1;
+                    PreparedStatement getNewAsetId = conn.prepareStatement(
+                        "SELECT id FROM aset_keuangan WHERE sumber = ? AND id_user = ?"
+                    );
+                    getNewAsetId.setString(1, newSource);
+                    getNewAsetId.setInt(2, User.getId());
+                    ResultSet asetRs = getNewAsetId.executeQuery();
+
+                    if (asetRs.next()) {
+                        newAsetId = asetRs.getInt("id");
+                    }
+                    asetRs.close();
+                    getNewAsetId.close();
+
+                    if (newAsetId != -1) {
+                        // Update id_aset pada transaksi ke aset yang baru
+                        PreparedStatement updateAsetId = conn.prepareStatement(
+                            "UPDATE transaksi SET id_aset = ? WHERE id = ? AND id_user = ?"
+                        );
+                        updateAsetId.setInt(1, newAsetId);
+                        updateAsetId.setInt(2, TransaksiView.selectedTransaksiId);
+                        updateAsetId.setInt(3, User.getId());
+                        updateAsetId.executeUpdate();
+                        updateAsetId.close();
+                    }
+
+                } else {
+                    // Sumber tetap, cukup sesuaikan saldo berdasarkan selisih
+                    int selisih = oldAmount - amount;
+                    if (selisih != 0) {
+                        PreparedStatement asetStmt = conn.prepareStatement(
+                            "UPDATE aset_keuangan SET saldo = saldo + ? " +
+                            "WHERE sumber = ? AND id_user = ?"
+                        );
+                        asetStmt.setInt(1, selisih);
+                        asetStmt.setString(2, oldSource);
+                        asetStmt.setInt(3, User.getId());
+                        asetStmt.executeUpdate();
+                        asetStmt.close();
+                    }
+                }
                 value = true;
                 TransaksiView.selectedTransaksiId = 0;
             }
@@ -202,6 +255,8 @@ public class TransaksiHelper {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return value;
     }
+
 }

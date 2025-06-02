@@ -134,7 +134,7 @@
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="e2" green="f7" red="df" type="rgb"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="halo"/>
+            <Property name="toolTipText" type="java.lang.String" value="username"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
             </Property>
@@ -150,6 +150,7 @@
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="e2" green="f7" red="df" type="rgb"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="password"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
             </Property>
